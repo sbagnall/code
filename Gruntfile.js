@@ -30,6 +30,9 @@ module.exports = function(grunt) {
           jQuery: true
         }
       },
+      mainjs: {
+        src: 'main.js'
+      },
       gruntfile: {
         src: 'Gruntfile.js'
       },
@@ -44,6 +47,10 @@ module.exports = function(grunt) {
       all: []
     },
     watch: {
+      mainjs: {
+        files: '<%= jshint.mainjs.src %>',
+        tasks: ['jshint:mainjs']
+      },
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
         tasks: ['jshint:gruntfile']

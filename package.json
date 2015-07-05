@@ -16,7 +16,7 @@
   "description": "for now this is empty",
   "license": "ISC",
   "scripts": {
-    "start": "node ./app/test.js"
+    "start": "node ./main.js"
   },
-  "main": "./main.js"
+  "main": "./app.js"
 }
