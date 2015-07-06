@@ -27,13 +27,21 @@ module.exports = function(grunt) {
         src: ['src/shared/**/*.js']
       },
       app: {
-        src: ['src/*.js']
-      } 
+        src: ['src/app/**/*.js']
+      },
+      www: {
+        src: ['src/www/**/*.js']
+      }
     },
     browserify:{
       public: {
-        src: ['<%= jshint.shared.src %>'],
-        dest: 'public/app.bundle.js'
+        src: ['<%= jshint.www.src %>', '<%= jshint.shared.src %>'],
+        dest: 'public/app.bundle.js',
+        options: {
+          // browserifyOptions: {
+          //   debug: true
+          // }
+        }
       }
     }
   });
