@@ -4,7 +4,8 @@
 	var srv = require('http').createServer(handler),
 	router = require('./src/app/router'),
 	io = require('socket.io')(srv),
-	constants = require('./src/shared/constants');
+	constants = require('./src/shared/constants'),
+	broker = require('./src/app/broker');
 
 	function handler (req, res) {
 
@@ -27,10 +28,11 @@
 	});
 
 	io.on('connection', function (socket) {
-		console.log('server received connection: ' + socket);
+		console.log('server received connection');
 
 		socket.on(constants.appName, function (data) {
-			console.log(data);
+			broker.handleMessage(io, data);
+			
 		});
 	});
 
