@@ -5,7 +5,8 @@
 	router = require('./src/app/router'),
 	io = require('socket.io')(srv),
 	constants = require('./src/shared/constants'),
-	broker = require('./src/app/broker');
+	broker = require('./src/shared/broker'),
+	handlerMappings = require('./src/app/handlerMappings');
 
 	function handler (req, res) {
 
@@ -31,7 +32,7 @@
 		console.log('server received connection');
 
 		socket.on(constants.appName, function (data) {
-			broker.handleMessage(io, data);
+			broker(handlerMappings, { io: io }).handleMessage(data);
 		});
 	});
 

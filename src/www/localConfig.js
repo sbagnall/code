@@ -31,38 +31,30 @@ module.exports = (function () {
 		}
 
 		function applyAndStore(data) {
+			
+			var config = $.extend(
+				true, 
+				JSON.parse(localStorage.getItem(constants.appName)),
+				data);
+			
+			applyConfig(config);
 
-			applyConfig(data);
-
-			var obj = JSON.parse(
-				localStorage.getItem(constants.appName));
-
-			localStorage.setItem(
-				constants.appName,
-				JSON.stringify($.extend(true, obj, data)));
+			localStorage.setItem(constants.appName,	JSON.stringify(config));
 		}
 
 		function tryApply() {
-			var data = JSON.parse(
-				localStorage.getItem(constants.appName));
-
-			if (data) {
-				applyConfig(data);
+			
+			var config = JSON.parse(localStorage.getItem(constants.appName));
+			
+			if (config) {
+				applyConfig(config);
 				return true;
-			} else {
-				return false;
 			}
+			
+			return false;
 		}
 
 		function init () {
-			socket.on(constants.appName, function (data) {
-				// handle response from server
-				if (data.localConfig) {
-					applyAndStore(data.data);
-				}
-			});
-
-			// try to apply bindings from localStorage
 			if (!tryApply()) {
 				// request form server
 				socket.emit(constants.appName, {
@@ -72,9 +64,8 @@ module.exports = (function () {
 		}
 
 		return {
-			init: init, 
-			applyAndStore: applyAndStore,
-			tryApply: tryApply
+			init: init,
+			applyAndStore: applyAndStore 
 		};
 
 	}

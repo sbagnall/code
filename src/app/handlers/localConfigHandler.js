@@ -1,12 +1,10 @@
-var constants = require('../shared/constants');
+module.exports = function (io) {
 
-module.exports = { handleMessage: handleMessage };
+	var constants = require('../../shared/constants');
 
-function handleMessage(io, data) {
+	function handle(message) {
 
-	if (data.localConfig) {
-
-		if (data.data) {
+		if (message.data) {
 
 			// TODO: save config on server storage
 
@@ -31,7 +29,8 @@ function handleMessage(io, data) {
 				}
 			});
 		}
-	} else {
-		console.log('received: ' + data);
 	}
-}
+
+	return handle;
+
+};

@@ -4,8 +4,16 @@ window.sbagnall.client = window.sbagnall.client || (function (io) {
 
 	'use strict';
 
-	var socket = io('http://localhost:3000'),
-		localConfig = require('./localConfig').instance(socket);
+	var constants = require('../shared/constants'),
+		socket = io('http://localhost:3000'),
+		localConfig = require('./localConfig').instance(socket),
+		broker = require('../shared/broker'),
+		handlerMappings = require('./handlerMappings');
+
+	socket.on(constants.appName, function (message) {
+		broker(handlerMappings, { localConfig: localConfig })
+			.handleMessage(message);
+	});
 
 	var init = function () {
 		localConfig.init();
