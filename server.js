@@ -32,7 +32,6 @@
 
 		socket.on(constants.appName, function (data) {
 			broker.handleMessage(io, data);
-			
 		});
 	});
 

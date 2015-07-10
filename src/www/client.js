@@ -1,20 +1,18 @@
-/* global io, window, jQuery */
+/* global io, window */
 window.sbagnall = window.sbagnall || {};
-window.sbagnall.client = window.sbagnall.client || (function ($, io) {
+window.sbagnall.client = window.sbagnall.client || (function (io) {
 
 	'use strict';
 
 	var socket = io('http://localhost:3000'),
-		localConfig = require('./localConfig'),
-		keyMapping = require('./keyMapping');
+		localConfig = require('./localConfig').instance(socket);
 
 	var init = function () {
-		keyMapping.init(socket);
-		localConfig.init(socket);
+		localConfig.init();
 	};
 
-	return { 
+	return { 	
 		init: init,
 	};
 
-})(jQuery, io);
+})(io);

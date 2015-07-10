@@ -1,2 +1,5 @@
 exports.appName = 'app';
-exports.badger = 'badger';
+exports.Action = {
+	badger: 'badger',
+	otter: 'otter'
+}; 

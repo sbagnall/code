@@ -1,16 +1,10 @@
-'use strict';
-
 var constants = require('../shared/constants');
 
 module.exports = { handleMessage: handleMessage };
 
 function handleMessage(io, data) {
 
-	if (data.keydown) {
-
-		// TODO: handle key press
-
-	} else if (data.localConfig) {
+	if (data.localConfig) {
 
 		if (data.data) {
 
@@ -26,12 +20,18 @@ function handleMessage(io, data) {
 				data: {
 					keyBindings: [
 						{
-							key: { ctrl: true, which: 17 },
-							action: constants.badger
+							key: { which: 65 },
+							action: constants.Action.badger
+						},
+						{
+							key: { which: 66 },
+							action: constants.Action.otter
 						}
 					]
 				}
 			});
 		}
+	} else {
+		console.log('received: ' + data);
 	}
 }
