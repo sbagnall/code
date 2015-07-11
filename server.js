@@ -35,10 +35,13 @@
 			broker(handlerMappings, { io: io }).handleMessage(data);
 		});
 
+		socket.on('disconnect', function (e) {
+			console.log('client disconnected: ' + e);
+		});
+
 		socket.on('error', function (e) {
 			console.log('error: ' + e);
-			io = require('socket.io')(srv);
 		});
-	});
 
+	});
 })();

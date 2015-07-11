@@ -54,6 +54,7 @@ module.exports = {
 	LookDown: 'LookDown',
 	
 	Interact: 'Interact',
+	WeaponEquippedToggle: 'WeaponEquippedToggle',
 	WeaponToggle: 'WeaponToggle',
 	TaskManagement: 'TaskManagement',
 	ProgressionChoices: 'ProgressionChoices',
