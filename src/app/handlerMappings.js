@@ -1,4 +1,8 @@
-module.exports = function (context) {
+// app/handlerMappings.js
+
+'use strict';
+
+module.exports = function app_handlerMappings (context) {
 	return [
 		{
 			predicate: function (message) { return message.localConfig; },
@@ -6,7 +10,7 @@ module.exports = function (context) {
 		},
 		{
 			predicate: function () { return true; },
-			handler: require('./handlers/actionHandler') 
+			handler: require('./handlers/actionHandler')(context.io)
 		}
 	];
 };

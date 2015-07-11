@@ -1,4 +1,4 @@
-/* global localStorage, $ */
+/* global localStorage */
 module.exports = (function () {
 	'use strict';
 
@@ -30,12 +30,7 @@ module.exports = (function () {
 			}
 		}
 
-		function applyAndStore(data) {
-			
-			var config = $.extend(
-				true, 
-				JSON.parse(localStorage.getItem(constants.appName)),
-				data);
+		function applyAndStore(config) {
 			
 			applyConfig(config);
 
@@ -54,18 +49,22 @@ module.exports = (function () {
 			return false;
 		}
 
+		function requestFromServer() {
+			socket.emit(constants.appName, {
+				localConfig: true
+			});
+		}
+
 		function init () {
 			if (!tryApply()) {
-				// request form server
-				socket.emit(constants.appName, {
-					localConfig: true
-				});
+				requestFromServer();
 			}
 		}
 
 		return {
 			init: init,
-			applyAndStore: applyAndStore 
+			applyAndStore: applyAndStore,
+			requestFromServer: requestFromServer 
 		};
 
 	}

@@ -1,10 +1,14 @@
 /* global $, document */
+'use strict';
 
 var constants = require('../shared/constants');
 
 module.exports = { init: init }; 
 
+/// replaces bindings passed in - leaves other bindings as they are
 function init (socket, keyBindings) {
+
+	$(document).off('keydown');
 	$(document).on('keydown', function (e) {
 
 		keyBindings.some(function (item) {
@@ -20,6 +24,9 @@ function init (socket, keyBindings) {
 				(e.which === item.key.which)) {
 
 				socket.emit(constants.appName, item.action);
+
+				e.preventDefault();
+				
 				return true;
 			}
 		});

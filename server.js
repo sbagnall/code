@@ -34,6 +34,11 @@
 		socket.on(constants.appName, function (data) {
 			broker(handlerMappings, { io: io }).handleMessage(data);
 		});
+
+		socket.on('error', function (e) {
+			console.log('error: ' + e);
+			io = require('socket.io')(srv);
+		});
 	});
 
 })();

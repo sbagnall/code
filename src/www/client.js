@@ -5,7 +5,7 @@ window.sbagnall.client = window.sbagnall.client || (function (io) {
 	'use strict';
 
 	var constants = require('../shared/constants'),
-		socket = io('http://localhost:3000'),
+		socket = io.connect('http://localhost:3000'),
 		localConfig = require('./localConfig').instance(socket),
 		broker = require('../shared/broker'),
 		handlerMappings = require('./handlerMappings');
@@ -13,6 +13,10 @@ window.sbagnall.client = window.sbagnall.client || (function (io) {
 	socket.on(constants.appName, function (message) {
 		broker(handlerMappings, { localConfig: localConfig })
 			.handleMessage(message);
+	});
+
+	socket.on('disconnect', function () {
+		socket = io.connect('http://localhost:3000');
 	});
 
 	var init = function () {

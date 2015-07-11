@@ -1,6 +1,9 @@
+'use strict';
+
 module.exports = function (io) {
 
-	var constants = require('../../shared/constants');
+	var constants = require('../../shared/constants'),
+		defaultKeyBindings = require('../defaultKeyBindings');
 
 	function handle(message) {
 
@@ -16,16 +19,7 @@ module.exports = function (io) {
 			io.emit(constants.appName, {
 				localConfig: true,
 				data: {
-					keyBindings: [
-						{
-							key: { which: 65 },
-							action: constants.Action.badger
-						},
-						{
-							key: { which: 66 },
-							action: constants.Action.otter
-						}
-					]
+					keyBindings: defaultKeyBindings
 				}
 			});
 		}

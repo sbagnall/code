@@ -1,11 +1,15 @@
 /*global module:false*/
+'use strict';
+
 module.exports = function(grunt) {
+
 
   // Project configuration.
   grunt.initConfig({
     // Task configuration.
     jshint: {
       options: {
+        strict: true,
         node: true,
         curly: true,
         eqeqeq: true,
