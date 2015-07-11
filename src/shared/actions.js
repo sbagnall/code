@@ -1,0 +1,75 @@
+module.exports = {
+	Collections: 'Collections',
+	Achievements: 'Achievements',
+	Social: 'Social',
+	Warfronts: 'Warfronts',
+	Raid: 'Raid',
+	Console: 'Console',
+	Guild: 'Guild',
+
+	GameOptions: 'GameOptions', 
+
+	// local only
+
+	ZoomIn: 'ZoomIn',
+	ZoomOut: 'ZoomOut',
+	CloseWindow: 'Close',
+
+	UnTarget: 'UnTarget',
+	SelectTargetOfTarget: 'SelectTargetOfTarget',
+	TargetSelf: 'TargetSelf',
+	TargetNearestHostile: 'TargetNearestHostile',
+	TargetNearestFriendly: 'TargetNearestFriendly',
+	TargetHostile1: 'TargetHostile1',
+	TargetHostile2: 'TargetHostile2',
+	TargetHostile3: 'TargetHostile3',
+	TargetHostile4: 'TargetHostile4',
+	TargetHostile5: 'TargetHostile5',
+	TargetHostile6: 'TargetHostile6',
+	TargetHostile7: 'TargetHostile7',
+	TargetHostile8: 'TargetHostile8',
+	TargetFriendly1: 'TargetFriendly1',
+	TargetFriendly2: 'TargetFriendly2',
+	TargetFriendly3: 'TargetFriendly3',
+	TargetFriendly4: 'TargetFriendly4',
+	TargetFriendly5: 'TargetFriendly5',
+	TargetFriendly6: 'TargetFriendly6',
+	TargetFriendly7: 'TargetFriendly7',
+	TargetFriendly8: 'TargetFriendly8',
+
+	// local and server
+	
+	
+	TurnLeft: 'MoveLeft',
+	MoveForward: 'MoveForward',
+	TurnRight: 'TurnRight',
+	MoveBackwards: 'MoveBackwards',
+	StrafeLeft: 'StrafeLeft',
+	StrafeRight: 'StrafeRight',
+	Jump: 'Jump',
+	AutoMoveToggle: 'AutoMoveToggle',
+	LookLeft: 'LookLeft',
+	LookUp: 'LookUp',
+	LookRight: 'LookRight',
+	LookDown: 'LookDown',
+	
+	Interact: 'Interact',
+	WeaponToggle: 'WeaponToggle',
+	TaskManagement: 'TaskManagement',
+	ProgressionChoices: 'ProgressionChoices',
+	Abilities: 'Abilities',
+	Inventory: 'Inventory',
+	Crafting: 'Crafting',
+	Character: 'Character',
+	Chat: 'Chat',
+	Map: 'Map',
+	
+	UseAction1: 'UseAction1',
+	UseAction2: 'UseAction2',
+	UseAction3: 'UseAction3',
+	UseAction4: 'UseAction4',
+	UseAction5: 'UseAction5',
+	UseAction6: 'UseAction6',
+	UseAction7: 'UseAction7',
+	UseAction8: 'UseAction8'
+}; 
