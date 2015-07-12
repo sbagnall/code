@@ -27,6 +27,9 @@ module.exports = function(grunt) {
       gruntfile: {
         src: 'Gruntfile.js'
       },
+      server: {
+        src: 'server.js'
+      },
       shared: {
         src: ['src/shared/**/*.js']
       },
