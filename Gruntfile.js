@@ -43,7 +43,7 @@ module.exports = function(grunt) {
     browserify:{
       public: {
         src: ['<%= jshint.www.src %>', '<%= jshint.shared.src %>'],
-        dest: 'public/app.bundle.js',
+        dest: 'public/js/app.bundle.js',
         options: {
           // browserifyOptions: {
           //   debug: true

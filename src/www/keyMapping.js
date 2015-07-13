@@ -1,11 +1,11 @@
 /* global $, document */
 'use strict';
 
-var constants = require('../shared/constants');
+var constants = require('../shared/constants'),
+	_ = require('lodash');
 
 module.exports = { init: init }; 
 
-/// replaces bindings passed in - leaves other bindings as they are
 function init (socket, keyBindings) {
 
 	$(document).off('keydown');
@@ -13,8 +13,7 @@ function init (socket, keyBindings) {
 
 		keyBindings.some(function (item) {
 
-			item = $.extend(
-				true, 
+			item = _.merge(
 				{ key: { ctrl: false, alt: false, shift: false }},
 				item);
 
