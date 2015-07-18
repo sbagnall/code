@@ -2,33 +2,25 @@
 	'use strict';
 	
 	var express = require('express'),
+		bodyParser = require('body-parser'),
 		app = express(),
 		http = require('http'),
 		server = http.createServer(app),
 		io = require('socket.io')(server),
 		constants = require('./src/shared/constants'),
 		broker = require('./src/shared/broker'),
-		handlerMappings = require('./src/app/handlerMappings');
+		handlerMappings = require('./src/app/handlerMappings'),
+		session = require('./src/app/session'),
+		auth = require('./src/app/auth');
 	
 	app.use(express.static(__dirname + '/public/js'));
 	app.use(express.static(__dirname + '/node_modules/jquery/dist'));
 	app.use(express.static(__dirname + '/node_modules/socket.io/node_modules/socket.io-client'));
 
-	var	session = require('express-session'),
-		secret = process.env[constants.appName + '_SECRET'];
+	app.use(bodyParser.urlencoded({ extended: true }));
 
-	var sess = {
-	  secret: secret,
-	  cookie: {}
-	};
-	 
-	if (app.get('env') === 'production') {
-	  app.set('trust proxy', 1); // trust first proxy 
-	  sess.cookie.secure = true; // serve secure cookies 
-	}
-
-	app.use(session(sess));
-
+	session.init(app, io);
+	
 	server.listen(3000, function () {
 		console.log('listening on http://localhost:3000');
 	});
@@ -39,6 +31,13 @@
 
 	io.on('connection', function (socket) {
 		console.log('server received connection from ' + socket.id);
+
+		if (!auth.isAuthorized(socket.request.session)) {
+			console.log('connection rejected');
+
+			socket.conn.close();
+			return;
+		}
 
 		socket.on(constants.appName, function (data) {
 			broker(handlerMappings, { io: io }).handleMessage(data);
@@ -62,18 +61,10 @@
 		var Model = require('./src/app/Model'),
 			model = new Model(req);
 
-		if (model.username && model.password) {
-			req.session.username = model.username;
-			req.session.password = model.password;
-			console.log('username: ' + model.username + ' password: ' + model.password);
+		if (auth.tryAuthorize(req.session, model)) {
+			res.sendFile(__dirname + '/public/index.html');	
 		} else {
-			console.log('no authentiction details received');
-		}
-
-		if (req.session.username && req.session.password) {
-			res.end('username: ' + req.session.username + ', password: ' + req.session.password);
-		} else {	
-			res.sendFile(__dirname + '/public/index.html');
+			res.sendFile(__dirname + '/public/login.html');	
 		}
 	});
 
