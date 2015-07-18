@@ -13,7 +13,7 @@
 		session = require('./src/app/session'),
 		auth = require('./src/app/auth');
 	
-	app.use(express.static(__dirname + '/public/js'));
+	app.use(express.static(__dirname + '/dist'));
 	app.use(express.static(__dirname + '/node_modules/jquery/dist'));
 	app.use(express.static(__dirname + '/node_modules/socket.io/node_modules/socket.io-client'));
 
