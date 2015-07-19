@@ -26,6 +26,6 @@ module.exports =  {
 		});
 
 		app.use(sessionMiddleware);
-	},
+	}
 };
 

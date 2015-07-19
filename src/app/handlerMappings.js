@@ -10,7 +10,7 @@ module.exports = function app_handlerMappings (context) {
 		},
 		{
 			predicate: function () { return true; },
-			handler: require('./handlers/actionHandler')(context.io)
+			handler: require('./handlers/actionHandler')(context.user, context.io)
 		}
 	];
 };

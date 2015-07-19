@@ -1,27 +1,44 @@
 'use strict';
 
+var tempUsers = [
+	{
+		userid: 1,
+		username: 'steve',
+		password: 'password',
+		sockets: []
+	}, 
+	{
+		userid: 2,
+		username: 'bob',
+		password: 'password',
+		sockets: []
+	}
+];
+
 module.exports = (function () {
-	var isAuthorized = function (session) {
-			return (session.username);
+	var loginPage = '/public/login.html',
+		isAuthorized = function (session) {
+			return (session.user);
 		},
 		tryAuthorize = function (session, model) {
-			if (authorize(model.username, model.password)) {
-				session.username = model.username;
-			}
+			authorize(session, model.username, model.password);
 			return isAuthorized(session);
 		},
-		authorize = function (username, password) {
-			if (username === 'a' && password === 'b') {
-				return true;
-			} else {
-				return false;
-			}
+		authorize = function (session, username, password) {
+
+			return tempUsers.some(function (item) {
+				if (username === item.username && password === item.password) {
+					session.user = item;
+					return true;
+				} 	
+			});
 		},
 		isAuthenticateAttempt = function (model) {
 			return model.username && model.password;
 		};
 
 	return {
+		loginPage: loginPage,
 		isAuthorized: isAuthorized,
 		tryAuthorize: tryAuthorize,
 		isAuthenticateAttempt: isAuthenticateAttempt

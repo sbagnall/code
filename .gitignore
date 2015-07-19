@@ -1,3 +1,4 @@
+*.cer
 *.sublime*
 node_modules
 dist

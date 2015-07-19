@@ -10,7 +10,3 @@ function Model(request) {
 	this.username = this.extra.username;
 	this.password = this.extra.password;
 } 
-
-Model.prototype.isAuthenticated = function () {
-	return false;
-};
