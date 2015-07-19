@@ -13,6 +13,7 @@
 		session = require('./src/app/session'),
 		auth = require('./src/app/auth');
 	
+	app.use(express.static(__dirname + '/public/favicon.ico'));
 	app.use(express.static(__dirname + '/dist'));
 	app.use(express.static(__dirname + '/node_modules/jquery/dist'));
 	app.use(express.static(__dirname + '/node_modules/socket.io/node_modules/socket.io-client'));
@@ -54,17 +55,21 @@
 
 	app.all('/', function (req, res) {
 
-		if(req.url === '/favicon.ico') {
-			return res.end(''); //stop '/favicon.ico' request	
-		}
-
 		var Model = require('./src/app/Model'),
 			model = new Model(req);
 
-		if (auth.tryAuthorize(req.session, model)) {
-			res.sendFile(__dirname + '/public/index.html');	
+		if (auth.isAuthenticateAttempt(model)) {
+			if (auth.tryAuthorize(req.session, model)) {
+				res.redirect('/');
+			} else {
+				res.sendFile(__dirname + '/public/login.html');
+			}
 		} else {
-			res.sendFile(__dirname + '/public/login.html');	
+			if (!auth.isAuthorized(req.session)) {
+				res.sendFile(__dirname + '/public/login.html');
+			} else {
+				res.sendFile(__dirname + '/public/index.html');	
+			}
 		}
 	});
 

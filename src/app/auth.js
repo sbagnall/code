@@ -2,19 +2,28 @@
 
 module.exports = (function () {
 	var isAuthorized = function (session) {
-			return (session.username && session.password);
+			return (session.username);
 		},
 		tryAuthorize = function (session, model) {
-			if (model.username && model.password) {
+			if (authorize(model.username, model.password)) {
 				session.username = model.username;
-				session.password = model.password;
 			}
-
 			return isAuthorized(session);
+		},
+		authorize = function (username, password) {
+			if (username === 'a' && password === 'b') {
+				return true;
+			} else {
+				return false;
+			}
+		},
+		isAuthenticateAttempt = function (model) {
+			return model.username && model.password;
 		};
 
 	return {
 		isAuthorized: isAuthorized,
-		tryAuthorize: tryAuthorize
+		tryAuthorize: tryAuthorize,
+		isAuthenticateAttempt: isAuthenticateAttempt
 	};
 })();
