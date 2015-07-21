@@ -28,10 +28,9 @@ module.exports = (function () {
 
 					var user = socket.request.session.user;
 
-					user.sockets.push(socket.id);
+					user.socketId = socket.id;
 
 					console.log('added socket: ' + socket.id + ' to user: ' + user.username + '('+ user.userid + ')');
-					displayUserSockets(user);
 
 					socket.on(constants.appName, function (data) {
 						if (isAuthorized(socket)) {
@@ -42,13 +41,9 @@ module.exports = (function () {
 					socket.on('disconnect', function () {
 						console.log('client disconnected: ' + socket.id);
 
-						var index = user.sockets.indexOf(socket.id);
-						if (index !== -1) {
-							user.sockets.splice(index);
-						} 
+						user.socketId = null;
 
 						console.log('removed socket: ' + socket.id + ' from user: ' + user.username + '('+ user.userid + ')');
-						displayUserSockets(user);
 					});
 
 					socket.on('error', function (err) {
@@ -58,12 +53,6 @@ module.exports = (function () {
 			});
 
 			return io;
-		},
-
-		displayUserSockets = function (user) {
-			user.sockets.forEach(function (item) {
-				console.log(item + ',');
-			});
 		};
 
 	return {

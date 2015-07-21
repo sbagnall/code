@@ -5,13 +5,13 @@ var tempUsers = [
 		userid: 1,
 		username: 'steve',
 		password: 'password',
-		sockets: []
+		socketId: null
 	}, 
 	{
 		userid: 2,
 		username: 'bob',
 		password: 'password',
-		sockets: []
+		socketId: null
 	}
 ];
 
@@ -25,7 +25,7 @@ module.exports = (function () {
 			return isAuthorized(session);
 		},
 		authorize = function (session, username, password) {
-
+			// TODO: replace with db access
 			return tempUsers.some(function (item) {
 				if (username === item.username && password === item.password) {
 					session.user = item;

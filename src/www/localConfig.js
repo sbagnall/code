@@ -21,13 +21,10 @@ module.exports = (function () {
 
 		function applyConfig(data) {
 			if (data.keyBindings) {
-
 				keyMapping.init(socket, data.keyBindings);
-
-				// TODO: apply local configuration settings
-
-				
 			}
+
+			// TODO: apply other local configuration settings
 		}
 
 		function applyAndStore(config) {

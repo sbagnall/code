@@ -7,10 +7,7 @@ module.exports = function(user, io) {
 	function handle (message) {
 		console.log('received: ' + message + ' from ' + user.username + '(' + user.userid + ')');
 
-		user.sockets.some(function (item) {
-			io.emit(item, constants.appName, message);
-		});
-		
+		io.emit(user.socketId, constants.appName, message);
 	}
 
 	return handle;
