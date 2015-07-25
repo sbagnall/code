@@ -35,11 +35,14 @@
 			model = new Model(req);
 
 		if (auth.isAuthenticateAttempt(model)) {
-			if (auth.tryAuthorize(req.session, model)) {
-				res.redirect('/');
-			} else {
-				res.sendFile(__dirname + auth.loginPage);
-			}
+			auth.tryAuthorize(req.session, model, function (err, isAuthorized) {
+
+				if (err || !isAuthorized) {
+					res.sendFile(__dirname + auth.loginPage);
+				} else {
+					res.redirect('/');
+				} 
+			});
 		} else {
 			if (!auth.isAuthorized(req.session)) {
 				res.sendFile(__dirname + auth.loginPage);

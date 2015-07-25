@@ -30,7 +30,7 @@ module.exports = (function () {
 
 					user.socketId = socket.id;
 
-					console.log('added socket: ' + socket.id + ' to user: ' + user.username + '('+ user.userid + ')');
+					console.log('added socket: ' + socket.id + ' to user: ' + user.username + '('+ user._id + ')');
 
 					socket.on(constants.appName, function (data) {
 						if (isAuthorized(socket)) {
@@ -43,7 +43,7 @@ module.exports = (function () {
 
 						user.socketId = null;
 
-						console.log('removed socket: ' + socket.id + ' from user: ' + user.username + '('+ user.userid + ')');
+						console.log('removed socket: ' + socket.id + ' from user: ' + user.username + '('+ user._id + ')');
 					});
 
 					socket.on('error', function (err) {

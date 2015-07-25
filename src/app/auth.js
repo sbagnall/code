@@ -1,36 +1,28 @@
 'use strict';
 
-var tempUsers = [
-	{
-		userid: 1,
-		username: 'steve',
-		password: 'password',
-		socketId: null
-	}, 
-	{
-		userid: 2,
-		username: 'bob',
-		password: 'password',
-		socketId: null
-	}
-];
+var DataAccess = require('./DataAccess'),
+	da = new DataAccess();
 
 module.exports = (function () {
 	var loginPage = '/public/login.html',
 		isAuthorized = function (session) {
-			return (session.user);
+			return ((typeof session.user !== 'undefined') && (session.user !== null));
 		},
-		tryAuthorize = function (session, model) {
-			authorize(session, model.username, model.password);
-			return isAuthorized(session);
+		tryAuthorize = function (session, model, cb) {
+			authorize(session, model.username, model.password, function () {
+				var isAuth = isAuthorized(session);
+				cb((isAuth ? null : 'not authorized'), isAuth);
+			});
 		},
-		authorize = function (session, username, password) {
-			// TODO: replace with db access
-			return tempUsers.some(function (item) {
-				if (username === item.username && password === item.password) {
-					session.user = item;
-					return true;
-				} 	
+		authorize = function (session, username, password, cb) {
+
+			da.findUser(username, password, function (err, user) {
+				if (err) {
+					cb(err);
+				} else {
+					session.user = user;
+					cb();
+				}
 			});
 		},
 		isAuthenticateAttempt = function (model) {
