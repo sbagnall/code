@@ -12,7 +12,7 @@ module.exports = function(user, io) {
 		var socket = io.sockets.connected[user.socketId];
 
 		if (socket) {
-			io.emit(constants.appName, message);	
+			socket.emit(constants.appName, message);	
 		}
 	}
 

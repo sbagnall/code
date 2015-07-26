@@ -2,6 +2,7 @@
 	'use strict';
 	
 	var express = require('express'),
+		favicon = require('serve-favicon'),
 		config = require('./config'),
 		bodyParser = require('body-parser'),
 		app = express(),
@@ -12,7 +13,7 @@
 		session = require('./src/app/session'),
 		auth = require('./src/app/auth');
 	
-	app.use(express.static(__dirname + '/public/favicon.ico'));
+	app.use(favicon(__dirname + '/public/favicon.ico'));
 	app.use(express.static(__dirname + '/dist'));
 	app.use(express.static(__dirname + '/node_modules/jquery/dist'));
 	app.use(express.static(__dirname + '/node_modules/socket.io/node_modules/socket.io-client'));

@@ -27,7 +27,6 @@ module.exports = (function () {
 				if (isAuthorized(socket)) {
 
 					var user = socket.request.session.user;
-
 					user.socketId = socket.id;
 
 					console.log('added socket: ' + socket.id + ' to user: ' + user.username + '('+ user._id + ')');
@@ -39,10 +38,9 @@ module.exports = (function () {
 					});
 
 					socket.on('disconnect', function () {
+
 						console.log('client disconnected: ' + socket.id);
-
 						user.socketId = null;
-
 						console.log('removed socket: ' + socket.id + ' from user: ' + user.username + '('+ user._id + ')');
 					});
 
