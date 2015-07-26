@@ -12,7 +12,7 @@ module.exports = function (user, io) {
 		da.open(function (err) {
 			if (!err) {
 				if (message.data) {
-					da.saveLocalConfig(user, message.data, function (err) {
+					da.save(user, 'localConfig', message.data, function (err) {
 						if (err) {
 							console.log('error saving local config data for user ' + 
 								user.username + '(' + user._id + '):' + 
@@ -20,7 +20,7 @@ module.exports = function (user, io) {
 						}
 					});
 				} else {
-					da.loadLocalConfig(user, function (err, data) {
+					da.load(user, 'localConfig', function (err, data) {
 						if (err || !data) {
 							data = {
 								keyBindings: defaultKeyBindings

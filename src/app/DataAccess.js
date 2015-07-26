@@ -51,25 +51,8 @@ DataAccess.prototype.findUser = function (uname, pword, cb) {
 	});
 };
 
-DataAccess.prototype.save = function (uname, pword, cb) {
-	this.getCollection('users', function (err, collection) {
-		if (err) {
-			cb(err);
-		} else {
-			collection.findOne({username: uname, password: pword}, 
-				function (err, result) {
-					if (err) {
-						cb(err);
-					} else {
-						cb(null, result);
-					}
-				});
-		}
-	});
-};
-
-DataAccess.prototype.saveLocalConfig = function (user, data, cb) {
-	this.getCollection('localConfig', function (err, collection) {
+DataAccess.prototype.save = function (user, collectionName, data, cb) {
+	this.getCollection(collectionName, function (err, collection) {
 		if (err) {
 			cb(err);
 		} else {
@@ -85,8 +68,8 @@ DataAccess.prototype.saveLocalConfig = function (user, data, cb) {
 	});
 };
 
-DataAccess.prototype.loadLocalConfig = function (user, cb) {
-	this.getCollection('localConfig', function (err, collection) {
+DataAccess.prototype.load = function (user, collectionName, cb) {
+	this.getCollection(collectionName, function (err, collection) {
 		if (err) {
 			cb(err);
 		} else {
