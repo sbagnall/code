@@ -1,28 +1,44 @@
 'use strict';
 
-module.exports = function (io) {
+var DataAccess = require('../DataAccess'),
+	da = new DataAccess(),
+	constants = require('../../shared/constants'),
+	defaultKeyBindings = require('../defaultKeyBindings');
 
-	var constants = require('../../shared/constants'),
-		defaultKeyBindings = require('../defaultKeyBindings');
+module.exports = function (user, io) {
 
 	function handle(message) {
 
-		if (message.data) {
+		da.open(function (err) {
+			if (!err) {
+				if (message.data) {
+					da.saveLocalConfig(user, message.data, function (err) {
+						if (err) {
+							console.log('error saving local config data for user ' + 
+								user.username + '(' + user._id + '):' + 
+								err);
+						}
+					});
+				} else {
+					da.loadLocalConfig(user, function (err, data) {
+						if (err || !data) {
+							data = {
+								keyBindings: defaultKeyBindings
+							};
+						}
 
-			// TODO: save config on server storage
+						var socket = io.sockets.connected[user.socketId];
 
-		} else {
-			
-			// TODO: retrieve from server storage -
-			// for now emit temp data
-			
-			io.emit(constants.appName, {
-				localConfig: true,
-				data: {
-					keyBindings: defaultKeyBindings
+						if (socket) {
+							socket.emit(constants.appName, {
+								localConfig: true,
+								data: data
+							});	
+						} 
+					});
 				}
-			});
-		}
+			}
+		});
 	}
 
 	return handle;

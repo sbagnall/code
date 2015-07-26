@@ -19,9 +19,9 @@ module.exports = (function () {
 		var keyMapping = require('./keyMapping'),
 			constants = require('../shared/constants.js');
 
-		function applyConfig(data) {
-			if (data.keyBindings) {
-				keyMapping.init(socket, data.keyBindings);
+		function applyConfig(config) {
+			if (config.keyBindings) {
+				keyMapping.init(socket, config.keyBindings);
 			}
 
 			// TODO: apply other local configuration settings
@@ -52,6 +52,13 @@ module.exports = (function () {
 			});
 		}
 
+		function saveToServer() {
+			socket.emit(constants.appName, {
+				localConfig: true,
+				data: JSON.parse(localStorage.getItem(constants.appName))
+			});
+		}
+
 		function init () {
 			if (!tryApply()) {
 				requestFromServer();
@@ -61,7 +68,8 @@ module.exports = (function () {
 		return {
 			init: init,
 			applyAndStore: applyAndStore,
-			requestFromServer: requestFromServer 
+			requestFromServer: requestFromServer,
+			saveToServer: saveToServer 
 		};
 
 	}

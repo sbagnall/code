@@ -11,6 +11,9 @@ module.exports = function (localConfig) {
 		switch (message) {
 			case actions.GameOptions:
 			localConfig.requestFromServer();
+			break;
+			case actions.Interact:
+			localConfig.saveToServer();
 			break; 
 		}
 	}

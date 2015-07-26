@@ -7,8 +7,14 @@ module.exports = function(user, io) {
 	function handle (message) {
 		console.log('received: ' + message + ' from ' + user.username + '(' + user._id + ')');
 
-		io.emit(user.socketId, constants.appName, message);
+		// TODO: deal with message
+		
+		var socket = io.sockets.connected[user.socketId];
+
+		if (socket) {
+			io.emit(constants.appName, message);	
 		}
+	}
 
 	return handle;
 };	

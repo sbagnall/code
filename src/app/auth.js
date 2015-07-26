@@ -15,13 +15,19 @@ module.exports = (function () {
 			});
 		},
 		authorize = function (session, username, password, cb) {
+			da.open(function (err) {
 
-			da.findUser(username, password, function (err, user) {
 				if (err) {
 					cb(err);
 				} else {
-					session.user = user;
-					cb();
+					da.findUser(username, password, function (err, user) {
+						if (err) {
+							cb(err);
+						} else {
+							session.user = user;
+							cb();
+						}
+					});
 				}
 			});
 		},
