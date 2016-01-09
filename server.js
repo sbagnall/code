@@ -12,6 +12,7 @@
 		io = ioServer.init(server),
 		session = require('./src/app/session'),
 		auth = require('./src/app/auth');
+		
 	
 	app.use(favicon(__dirname + '/public/favicon.ico'));
 	app.use(express.static(__dirname + '/dist'));
